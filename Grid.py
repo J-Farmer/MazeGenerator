@@ -194,7 +194,7 @@ class DistanceGrid(Grid):
     
     def toBase62(self,num):
         
-        alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
         
         if(type(num) is not int):
             raise TypeError("Number must be an integer!")
