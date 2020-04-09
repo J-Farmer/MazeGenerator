@@ -1,4 +1,4 @@
-#Maze Generation with Python!
+# Maze Generation with Python!
 
 This repository is a translation of the code from the book *Mazes for Programmers: Coding Your Own Twisty Little Passages* by Jamis Buck.
 
