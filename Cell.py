@@ -8,12 +8,6 @@ class Cell():
         self.neighbors = {"north": None, "east": None, "south": None, "west": None}
         self.links = {"north": None, "east": None, "south": None, "west": None}
         self.opposite = {"north": "south", "east": "west", "south": "north", "west": "east"}
-    
-    def draw(self):
-        pass
-
-    def checkNeighbors(self):
-        pass
 
     def link(self, cell, bidi=True):
         for dir in self.neighbors:
