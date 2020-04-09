@@ -192,3 +192,16 @@ class DistanceGrid(Grid):
         
         return alphabet[idx]
     
+    def toBase62(self,num):
+        
+        alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        
+        if(type(num) is not int):
+            raise TypeError("Number must be an integer!")
+        if(num < 0):
+            raise ValueError("Number must be positve!")
+            
+        idx = num % len(alphabet)
+        
+        return alphabet[idx]
+    

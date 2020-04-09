@@ -9,7 +9,7 @@ Created on Thu Apr  9 15:37:45 2020
 from BinaryTree import BinaryTree
 from Grid import DistanceGrid
 
-grid = DistanceGrid(5,5)
+grid = DistanceGrid(12,12)
 
 BinaryTree.on(grid)
 start = grid[0][0]

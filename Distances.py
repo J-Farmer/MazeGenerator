@@ -20,3 +20,19 @@ class Distances():
     
     def __setitem__(self, key, distance):
         self.cells[key] = distance
+        
+    def pathTo(self, goal):
+        current = goal
+        
+        breadcrumbs = Distances(self.root)
+        breadcrumbs[current] = self.cells[current]
+        
+        while current != self.root:
+            
+            for n in current.linkedCells(dir=False):
+                if self.cells[n] < self.cells[current]:
+                    breadcrumbs[n] = self.cells[n]
+                    current = n
+                    break
+                
+        return breadcrumbs
