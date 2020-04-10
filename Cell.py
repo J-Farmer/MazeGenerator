@@ -1,9 +1,11 @@
 from Distances import Distances
 class Cell():
-    def __init__(self, size=10):
+    def __init__(self, x, y, size=10):
         self.size = size
         self.edgeCell = False
         self.edgeCellType = None
+        self.x = x
+        self.y = y
         self.walls = {"north": None, "east": None, "south": None, "west": None}
         self.neighbors = {"north": None, "east": None, "south": None, "west": None}
         self.links = {"north": None, "east": None, "south": None, "west": None}
@@ -38,8 +40,6 @@ class Cell():
             return None
         
         return linkedCells
-        
-            
     
     def isLinked(self, cell):
         for dir in self.neighbors:

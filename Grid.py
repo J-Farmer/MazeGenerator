@@ -10,7 +10,7 @@ class Grid():
         for row in range(self.rows):
             row = []
             for col in range(self.columns):
-                row.append(Cell(self.cellSize))
+                row.append(Cell(col, len(row), self.cellSize))
             grid.append(row)
 
         return grid
@@ -19,7 +19,7 @@ class Grid():
         x = randint(0, self.rows - 1)
         y = randint(0, self.columns - 1)
         
-        return self.grid[x][y], x, y
+        return self.grid[x][y]
 
     def configureCells(self):
         for row in range(self.rows):
@@ -174,10 +174,10 @@ class DistanceGrid(Grid):
         super().__init__(row, col)
     
     def contentsOf(self, cell):
-        if self.distances == None:
-            return super().contentsOf(cell)
-        
-        return self.toBase36(self.distances[cell])
+        if self.distances and (cell in self.distances.cells):
+            return self.toBase62(self.distances[cell])
+        else:    
+            return super().contentsOf(cell) 
         
     def toBase36(self,num):
         
