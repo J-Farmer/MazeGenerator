@@ -32,3 +32,14 @@ class Distances():
                     current = neighbor
                     break            
         return breadcrumbs
+    
+    def maxDistance(self):
+        maxDist = 0
+        maxCell = self.root
+        
+        for cell in self.cells:
+            if self.cells[cell] > maxDist:
+                maxCell = cell
+                maxDist = self.cells[cell]
+                
+        return maxDist, maxCell 
