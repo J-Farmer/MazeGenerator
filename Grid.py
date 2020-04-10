@@ -98,6 +98,9 @@ class Grid():
     def contentsOf(self, cell):
         return " "
     
+    def backgroundColor(self,cell):
+        return None
+    
     def __str__(self):
         output = "+" + "---+" * self.columns + "\n"
         
@@ -136,28 +139,42 @@ class Grid():
         bg = (255,255,255)
         wall = (255,0,0)
         
+        modes = ["background", 'walls']
+        
         im = Image.new("RGB", (imHeight + 1, imWidth + 1), color = bg)
         draw = ImageDraw.Draw(im)
         
-        for row in range(self.rows):
-            for col in range(self.columns):
-                
-                x1 = col * self.cellSize
-                x2 = (col + 1) * self.cellSize
-                y1 = row * self.cellSize
-                y2 = (row + 1) * self.cellSize
-                
-                if(self.grid[row][col].neighbors["north"] == None):
-                    draw.line((x1,y1, x2, y1), fill=wall)
-
-                if(self.grid[row][col].neighbors["west"] == None):
-                    draw.line((x1,y1, x1, y2), fill=wall)
-                
-                if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["east"]))):
-                   draw.line((x2, y1, x2, y2), fill=wall)
-                   
-                if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["south"]))):
-                   draw.line((x1, y2, x2, y2), fill=wall)
+        for mode in modes:
+            
+            for row in range(self.rows):
+                for col in range(self.columns):
+                    
+                    cell = self.grid[row][col]
+                    
+                    x1 = col * self.cellSize
+                    x2 = (col + 1) * self.cellSize
+                    y1 = row * self.cellSize
+                    y2 = (row + 1) * self.cellSize
+                    
+                    if mode == 'background':
+                        bgTemp = self.backgroundColor(cell)
+                        if bg == None:
+                            pass
+                        else:
+                            bg = bgTemp
+                            draw.rectangle((x1,y1,x2,y2), fill=bg, outline=bg)
+                    else:
+                        if(self.grid[row][col].neighbors["north"] == None):
+                            draw.line((x1,y1, x2, y1), fill=wall)
+        
+                        if(self.grid[row][col].neighbors["west"] == None):
+                            draw.line((x1,y1, x1, y2), fill=wall)
+                        
+                        if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["east"]))):
+                           draw.line((x2, y1, x2, y2), fill=wall)
+                           
+                        if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["south"]))):
+                           draw.line((x1, y2, x2, y2), fill=wall)
 
         
         if(name == None):
@@ -165,7 +182,9 @@ class Grid():
             return
         
         im.save(name)           
-                
+ 
+######################################################################################################################
+               
 class DistanceGrid(Grid):
     
     def __init__(self, row, col):
@@ -204,4 +223,33 @@ class DistanceGrid(Grid):
         idx = num % len(alphabet)
         
         return alphabet[idx]
+
+######################################################################################################################
+        
+class ColorGrid(DistanceGrid):
     
+    def __init__(self, row, col):
+        self.distances = None
+        self.max = None
+        super().__init__(row, col)
+        
+    def getDistances(self):
+        return self.distances
+        
+
+    def setDistances(self, distances, calculateMax = True):
+        self.distances = distances
+        
+        if calculateMax:
+            self.max = self.distances.maxDistance()[0]
+        
+    def backgroundColor(self, cell):
+        distance = self.distances[cell]
+        
+        intensity = float(self.max - distance) / self.max
+        dark = round(255 * intensity)
+        bright = 128 + round(127*intensity)
+        
+        return (dark, bright, dark)
+        
+     

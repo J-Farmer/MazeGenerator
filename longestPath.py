@@ -19,6 +19,10 @@ start = grid[0][0]
 
 distances = start.distances()
 
+grid.distances = distances
+
+print(grid)
+
 distance, newStart = distances.maxDistance()
 
 newDistances = newStart.distances()
