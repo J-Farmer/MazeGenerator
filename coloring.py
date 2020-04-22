@@ -9,12 +9,14 @@ from Grid import ColorGrid
 from BinaryTree import BinaryTree
 from Sidewinder import Sidewinder
 
-grid = ColorGrid(25,25)
+grid = ColorGrid(10,10)
 
-Sidewinder.on(grid)
+BinaryTree.on(grid)
 
 start = grid[int(grid.rows / 2)][int(grid.columns / 2)]
 
-grid.setDistances(start.distances())
+grid.setDistances(start.distances()) 
+
+print(grid)
 
 grid.toImage()

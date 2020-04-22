@@ -132,49 +132,42 @@ class Grid():
           
     def toImage(self, name=None):
         
-        print(f"Converting maze to {name}")
+        if name == None:
+            print("Displaying Maze!")
+        else:
+            print(f"Saving maze to {name}")
+            
         imWidth = self.cellSize * self.columns
         imHeight = self.cellSize * self.rows
         
         bg = (255,255,255)
-        wall = (255,0,0)
-        
-        modes = ["background", 'walls']
+        wall = (0,0,0)
         
         im = Image.new("RGB", (imHeight + 1, imWidth + 1), color = bg)
         draw = ImageDraw.Draw(im)
         
-        for mode in modes:
-            
-            for row in range(self.rows):
-                for col in range(self.columns):
+        for row in range(self.rows):
+            for col in range(self.columns):
                     
-                    cell = self.grid[row][col]
+                cell = self.grid[row][col]
                     
-                    x1 = col * self.cellSize
-                    x2 = (col + 1) * self.cellSize
-                    y1 = row * self.cellSize
-                    y2 = (row + 1) * self.cellSize
-                    
-                    if mode == 'background':
-                        bgTemp = self.backgroundColor(cell)
-                        if bg == None:
-                            pass
-                        else:
-                            bg = bgTemp
-                            draw.rectangle((x1,y1,x2,y2), fill=bg, outline=bg)
-                    else:
-                        if(self.grid[row][col].neighbors["north"] == None):
-                            draw.line((x1,y1, x2, y1), fill=wall)
-        
-                        if(self.grid[row][col].neighbors["west"] == None):
-                            draw.line((x1,y1, x1, y2), fill=wall)
+                x1 = col * self.cellSize
+                x2 = (col + 1) * self.cellSize
+                y1 = row * self.cellSize
+                y2 = (row + 1) * self.cellSize
+
                         
-                        if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["east"]))):
-                           draw.line((x2, y1, x2, y2), fill=wall)
-                           
-                        if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["south"]))):
-                           draw.line((x1, y2, x2, y2), fill=wall)
+                if(cell.neighbors["north"] == None):
+                    draw.line((x1,y1, x2, y1), fill=wall)
+
+                if(cell.neighbors["west"] == None):
+                    draw.line((x1,y1, x1, y2), fill=wall)
+                
+                if(not(cell.isLinked(cell.neighbors["east"]))):
+                   draw.line((x2, y1, x2, y2), fill=wall)
+                   
+                if(not(cell.isLinked(cell.neighbors["south"]))):
+                   draw.line((x1, y2, x2, y2), fill=wall)
 
         
         if(name == None):
@@ -236,20 +229,75 @@ class ColorGrid(DistanceGrid):
     def getDistances(self):
         return self.distances
         
-
-    def setDistances(self, distances, calculateMax = True):
+    def setDistances(self, distances, calculateMax=True):
         self.distances = distances
         
         if calculateMax:
             self.max = self.distances.maxDistance()[0]
         
-    def backgroundColor(self, cell):
-        distance = self.distances[cell]
+    def backgroundColor(self, cell, t = None):
         
+        if cell in self.distances.cells:
+            distance = self.distances[cell]
+        else:
+            distance = 0
+
         intensity = float(self.max - distance) / self.max
         dark = round(255 * intensity)
         bright = 128 + round(127*intensity)
         
-        return (dark, bright, dark)
+        return (dark, dark, bright)
         
+    #TODO: Add in code to color the longest path of the cells only.
+    def toImage(self, name=None, longestPath=False):
+        
+        if name == None:
+            print("Displaying Maze!")
+        else:
+            print(f"Saving maze to {name}")
+            
+        imWidth = self.cellSize * self.columns
+        imHeight = self.cellSize * self.rows
+        
+        bg = (255,255,255)
+        wall = (255,0,0)
+        
+        mode = ["background", "wall"]
+        
+        im = Image.new("RGB", (imHeight + 1, imWidth + 1), color = bg)
+        draw = ImageDraw.Draw(im)
+        
+        for m in mode:
+            for row in range(self.rows):
+                for col in range(self.columns):
+                        
+                    cell = self.grid[row][col]
+                        
+                    x1 = col * self.cellSize
+                    x2 = (col + 1) * self.cellSize
+                    y1 = row * self.cellSize
+                    y2 = (row + 1) * self.cellSize
+                    
+                    if m == "background":
+                        color = self.backgroundColor(cell)
+                        draw.rectangle((x1,y1,x2,y2), fill=color, outline=color)
+                    else:       
+                        if(self.grid[row][col].neighbors["north"] == None):
+                            draw.line((x1,y1, x2, y1), fill=wall)
+        
+                        if(self.grid[row][col].neighbors["west"] == None):
+                            draw.line((x1,y1, x1, y2), fill=wall)
+                        
+                        if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["east"]))):
+                           draw.line((x2, y1, x2, y2), fill=wall)
+                           
+                        if(not(self.grid[row][col].isLinked(self.grid[row][col].neighbors["south"]))):
+                           draw.line((x1, y2, x2, y2), fill=wall)
+
+        
+        if(name == None):
+            im.show()
+            return
+        
+        im.save(name)        
      

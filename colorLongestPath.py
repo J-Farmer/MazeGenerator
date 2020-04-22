@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Apr  9 15:37:45 2020
+Created on Wed Apr 22 11:23:00 2020
 
 @author: jfarm
 """
 
-
 from BinaryTree import BinaryTree
-from Grid import DistanceGrid
+from Grid import ColorGrid
 
-grid = DistanceGrid(10,10)
+grid = ColorGrid(10,10)
 
 BinaryTree.on(grid)
 start = grid[0][0]
@@ -21,6 +20,8 @@ maxDistance, newStart = distances.maxDistance()
 newDistances = newStart.distances()
 maxDist, goal = newDistances.maxDistance()
 
-grid.distances = newDistances.pathTo(goal)
+grid.setDistances(newDistances.pathTo(goal))
 
 print(grid)
+
+grid.toImage()
