@@ -17,15 +17,15 @@ print(grid)
 
 start = grid[0][0]
 
-distances = start.distances()
+distances = grid.findDistances(start)
 
-grid.distances = distances
+grid.setDistances(distances)
 
 print(grid)
 
 distance, newStart = distances.maxDistance()
 
-newDistances = newStart.distances()
+newDistances = grid.findDistances(newStart)
 
 distances, goal = newDistances.maxDistance()
 

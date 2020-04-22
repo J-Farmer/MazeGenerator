@@ -2,6 +2,7 @@ from Cell import Cell
 
 from random import randint
 from PIL import Image, ImageDraw
+from Distances import Distances
 
 class Grid():
     
@@ -191,6 +192,12 @@ class DistanceGrid(Grid):
         else:    
             return super().contentsOf(cell) 
         
+    def getDistances(self):
+        return self.distances
+        
+    def setDistances(self, distances):
+        self.distances = distances
+
     def toBase36(self,num):
         
         alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
@@ -216,6 +223,24 @@ class DistanceGrid(Grid):
         idx = num % len(alphabet)
         
         return alphabet[idx]
+    
+    def findDistances(self, startCell):
+        dis = Distances(startCell)
+        unvisited = [startCell]
+        
+        while unvisited:
+            notSeen = []
+            
+            for cell in unvisited:
+                for k in cell.linkedCells(dir=False):
+                    if(k in dis.cells):
+                        continue
+                    else:
+                        dis[k] = dis[cell] + 1
+                        notSeen.append(k)
+            unvisited = notSeen
+                
+        return dis
 
 ######################################################################################################################
         
@@ -234,8 +259,8 @@ class ColorGrid(DistanceGrid):
         
         if calculateMax:
             self.max = self.distances.maxDistance()[0]
-        
-    def backgroundColor(self, cell, t = None):
+            
+    def backgroundColor(self, cell):
         
         if cell in self.distances.cells:
             distance = self.distances[cell]
@@ -249,7 +274,7 @@ class ColorGrid(DistanceGrid):
         return (dark, dark, bright)
         
     #TODO: Add in code to color the longest path of the cells only.
-    def toImage(self, name=None, longestPath=False):
+    def toImage(self, name=None):
         
         if name == None:
             print("Displaying Maze!")

@@ -47,23 +47,25 @@ class Cell():
                 return True
         return False
     
-    def distances(self):
-        dis = Distances(self)
-        unvisited = [self]
-        
-        while unvisited:
-            notSeen = []
-            
-            for cell in unvisited:
-                for k in cell.linkedCells(dir=False):
-                    if(k in dis.cells):
-                        continue
-                    else:
-                        dis[k] = dis[cell] + 1
-                        notSeen.append(k)
-            unvisited = notSeen
-                
-        return dis
+# =============================================================================
+#     def distances(self):
+#         dis = Distances(self)
+#         unvisited = [self]
+#         
+#         while unvisited:
+#             notSeen = []
+#             
+#             for cell in unvisited:
+#                 for k in cell.linkedCells(dir=False):
+#                     if(k in dis.cells):
+#                         continue
+#                     else:
+#                         dis[k] = dis[cell] + 1
+#                         notSeen.append(k)
+#             unvisited = notSeen
+#                 
+#         return dis
+# =============================================================================
                         
                         
                     

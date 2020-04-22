@@ -14,11 +14,11 @@ grid = DistanceGrid(10,10)
 BinaryTree.on(grid)
 start = grid[0][0]
 
-distances = start.distances()
+distances = grid.findDistances(start)
 
 maxDistance, newStart = distances.maxDistance()
 
-newDistances = newStart.distances()
+newDistances = grid.findDistances(newStart)
 maxDist, goal = newDistances.maxDistance()
 
 grid.distances = newDistances.pathTo(goal)

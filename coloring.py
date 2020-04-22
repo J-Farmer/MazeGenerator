@@ -15,7 +15,7 @@ BinaryTree.on(grid)
 
 start = grid[int(grid.rows / 2)][int(grid.columns / 2)]
 
-grid.setDistances(start.distances()) 
+grid.setDistances(grid.findDistances(start)) 
 
 print(grid)
 
