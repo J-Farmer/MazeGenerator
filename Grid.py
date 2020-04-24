@@ -87,6 +87,7 @@ class Grid():
         self.rows = rows
         self.columns = columns
         self.cellSize = cellSize
+        self.size = self.rows * self.columns
         self.grid = self.prepareGrid()
         self.configureCells()
         
@@ -141,11 +142,11 @@ class Grid():
         imWidth = self.cellSize * self.columns
         imHeight = self.cellSize * self.rows
         
-        bg = (255,255,255)
-        wall = (0,0,0)
+        bg =    (255,255,255)
+        wall =  (0,0,0)
         
-        im = Image.new("RGB", (imHeight + 1, imWidth + 1), color = bg)
-        draw = ImageDraw.Draw(im)
+        im =    Image.new("RGB", (imHeight + 1, imWidth + 1), color = bg)
+        draw =  ImageDraw.Draw(im)
         
         for row in range(self.rows):
             for col in range(self.columns):
@@ -211,18 +212,23 @@ class DistanceGrid(Grid):
         
         return alphabet[idx]
     
-    def toBase62(self,num):
-        
+    def toBase62(self, num):
         alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-        
+        string = ""
+            
         if(type(num) is not int):
             raise TypeError("Number must be an integer!")
         if(num < 0):
             raise ValueError("Number must be positve!")
-            
-        idx = num % len(alphabet)
+        if(num == 0):
+            return "0"
         
-        return alphabet[idx]
+        while num:
+            idx = num % len(alphabet)
+            string += alphabet[idx]
+            num //= 62
+            
+        return string[::-1]
     
     def findDistances(self, startCell):
         dis = Distances(startCell)

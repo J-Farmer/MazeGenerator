@@ -9,7 +9,7 @@ from Grid import ColorGrid
 from BinaryTree import BinaryTree
 from Sidewinder import Sidewinder
 
-grid = ColorGrid(10,10)
+grid = ColorGrid(2,2)
 
 BinaryTree.on(grid)
 

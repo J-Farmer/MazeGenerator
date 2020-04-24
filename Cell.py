@@ -1,12 +1,10 @@
 from Distances import Distances
+from random import choice
 class Cell():
     def __init__(self, x, y, size=10):
         self.size = size
-        self.edgeCell = False
-        self.edgeCellType = None
         self.x = x
         self.y = y
-        self.walls = {"north": None, "east": None, "south": None, "west": None}
         self.neighbors = {"north": None, "east": None, "south": None, "west": None}
         self.links = {"north": None, "east": None, "south": None, "west": None}
         self.opposite = {"north": "south", "east": "west", "south": "north", "west": "east"}
@@ -47,25 +45,15 @@ class Cell():
                 return True
         return False
     
-# =============================================================================
-#     def distances(self):
-#         dis = Distances(self)
-#         unvisited = [self]
-#         
-#         while unvisited:
-#             notSeen = []
-#             
-#             for cell in unvisited:
-#                 for k in cell.linkedCells(dir=False):
-#                     if(k in dis.cells):
-#                         continue
-#                     else:
-#                         dis[k] = dis[cell] + 1
-#                         notSeen.append(k)
-#             unvisited = notSeen
-#                 
-#         return dis
-# =============================================================================
+    def getRandomNeighbor(self):
+        neighbors = []
+        for n in self.neighbors:
+            if self.neighbors[n] == None:
+                continue
+            else:
+                neighbors.append(self.neighbors[n])
+                
+        return choice(neighbors)
                         
                         
                     
