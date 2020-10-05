@@ -145,7 +145,7 @@ class Grid():
         bg =    (255,255,255)
         wall =  (0,0,0)
         
-        im =    Image.new("RGB", (imHeight + 1, imWidth + 1), color = bg)
+        im =    Image.new("RGB", (imWidth + 1, imHeight + 1), color = bg)
         draw =  ImageDraw.Draw(im)
         
         for row in range(self.rows):

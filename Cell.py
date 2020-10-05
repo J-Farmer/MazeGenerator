@@ -1,4 +1,4 @@
-from Distances import Distances
+#from Distances import Distances
 from random import choice
 class Cell():
     def __init__(self, x, y, size=10):

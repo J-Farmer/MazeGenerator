@@ -26,7 +26,7 @@ class BinaryTree():
 if __name__ == "__main__":
     from Grid import Grid
     
-    g = BinaryTree.on(Grid(10,10))
+    g = BinaryTree.on(Grid(10,15))
     
     print(g)
     
