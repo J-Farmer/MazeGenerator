@@ -24,9 +24,9 @@ class BinaryTree():
         return grid
     
 if __name__ == "__main__":
-    from Grid import Grid
+    from GridTest import Grid
     
-    g = BinaryTree.on(Grid(10,15))
+    g = BinaryTree.on(Grid(100,100))
     
     print(g)
     
