@@ -28,59 +28,26 @@ class Grid():
                 
                 cell = self.grid[row][col]
                 
-                if row == 0 and col == 0:
-                    cell.neighbors["north"] = None
-                    cell.neighbors["west"] = None
-                    cell.neighbors["east"] = self.grid[row][col+1]
-                    cell.neighbors["south"] = self.grid[row+1][col]
-                    
-                elif row == 0 and col == self.columns - 1: 
-                    cell.neighbors["north"] = None
-                    cell.neighbors["west"] = self.grid[row][col-1]
-                    cell.neighbors["east"] = None
-                    cell.neighbors["south"] = self.grid[row + 1][col]
-                    
-                elif row == self.rows - 1 and col == self.columns - 1:
-                    cell.neighbors["north"] = self.grid[row-1][col]
-                    cell.neighbors["west"] = self.grid[row][col-1]
-                    cell.neighbors["east"] = None
-                    cell.neighbors["south"] = None
-                    
-                elif row == self.rows - 1 and col == 0:
-                    cell.neighbors["north"] = self.grid[row-1][col]
-                    cell.neighbors["west"] = None
-                    cell.neighbors["east"] = self.grid[row][col+1]
-                    cell.neighbors["south"] = None
-
-                elif row == 0:
-                    cell.neighbors["north"] = None
-                    cell.neighbors["west"] = self.grid[row][col-1]
-                    cell.neighbors["east"] = self.grid[row][col+1]
-                    cell.neighbors["south"] = self.grid[row+1][col]
-
-                elif row == self.rows - 1:
-                    cell.neighbors["north"] = self.grid[row-1][col]
-                    cell.neighbors["west"] = self.grid[row][col-1]
-                    cell.neighbors["east"] = self.grid[row][col+1]
-                    cell.neighbors["south"] = None
-
-                elif col == 0:
-                    cell.neighbors["north"] = self.grid[row-1][col]
-                    cell.neighbors["west"] = None
-                    cell.neighbors["east"] = self.grid[row][col+1]
-                    cell.neighbors["south"] = self.grid[row+1][col]
-
-                elif col == self.columns - 1:
-                    cell.neighbors["north"] = self.grid[row-1][col]
-                    cell.neighbors["west"] = self.grid[row][col-1]
-                    cell.neighbors["east"] = None
-                    cell.neighbors["south"] = self.grid[row+1][col]
-                                
+                if col == 0:
+                    cell.neighbors["west"]=None
+                    cell.neighbors["east"]=self.grid[row][col+1]
+                elif col == self.columns-1:
+                    cell.neighbors["west"]=self.grid[row][col-1]
+                    cell.neighbors["east"]=None
                 else:
-                    cell.neighbors["north"] = self.grid[row-1][col]
-                    cell.neighbors["west"] = self.grid[row][col-1]
-                    cell.neighbors["east"] = self.grid[row][col+1]
-                    cell.neighbors["south"] = self.grid[row+1][col]
+                    cell.neighbors["west"]=self.grid[row][col-1]
+                    cell.neighbors["east"]=self.grid[row][col+1]
+
+                if row == 0:
+                    cell.neighbors["north"]=None
+                    cell.neighbors["south"]=self.grid[row+1][col]
+
+                elif row==self.rows-1:
+                    cell.neighbors["north"]=self.grid[row-1][col]
+                    cell.neighbors["south"]=None
+                else:
+                    cell.neighbors["north"]=self.grid[row-1][col]
+                    cell.neighbors["south"]=self.grid[row+1][col]
                     
     
     def __init__(self, rows, columns, cellSize=50):
