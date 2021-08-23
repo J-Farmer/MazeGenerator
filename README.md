@@ -8,3 +8,5 @@ To view the mazes, either run `BinaryTree` or `Sidewinder` on a `Grid` object (t
 
 You can then either print out a Grid object to the console, or you can call the `toImage()` method of Grid, 
 which will attempt to open the image in an image viewer, courtesy of `Pillow`. 
+
+I am curretntly working on a separate branch to visualize the maze in Pygame.
